@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#typedef struct {
+typedef struct {
     uint64_t *arena_head;
     uint64_t *arena_tail;
     uint64_t size;
