@@ -1,12 +1,20 @@
-Arena *arena_alloc(U64 cap);
+#include <stdint.h>
+
+#typedef struct {
+    uint64_t *arena_head;
+    uint64_t *arena_tail;
+    uint64_t size;
+} Arena;
+
+Arena *arena_alloc(uint64_t cap);
 void arena_release(Arena *arena);
-void arena_set_auto_align(arena *arena, U64 align);
-U64 arena_pos(Arena *arena);
-void *arena_push_no_zero(Arena *arena, U64 size);
-void *arena_push_aligner(Arena *arena, U64 alignment);
-void *arena_push(Arena *arena, U64 size);
-void arena_pop_to(Arena *arena, U64 pos);
-void arena_pop(Arena *arena, U64 size);
+void arena_set_auto_align(Arena *arena, uint64_t align);
+unsigned int arena_pos(Arena *arena);
+void *arena_push_no_zero(Arena *arena, uint64_t size);
+void *arena_push_aligner(Arena *arena, uint64_t alignment);
+void *arena_push(Arena *arena, uint64_t size);
+void arena_pop_to(Arena *arena, uint64_t pos);
+void arena_pop(Arena *arena, uint64_t size);
 void arena_clear(Arena *arena);
 
 int main() {
