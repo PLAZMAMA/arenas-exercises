@@ -1,12 +1,20 @@
+#include <stdlib.h>
 #include <stdint.h>
 
 typedef struct {
-    uint64_t *arena_head;
-    uint64_t *arena_tail;
+    uint64_t *arena_start;
+    uint64_t *content_head;
     uint64_t size;
 } Arena;
 
-Arena *arena_alloc(uint64_t cap);
+Arena *arena_alloc(uint64_t cap){
+    Arena *arena = malloc(sizeof(Arena));
+    arena->arena_start = malloc(cap);
+    arena->content_head = arena->arena_start;
+    arena->size = cap;
+    return arena;
+}
+
 void arena_release(Arena *arena);
 void arena_set_auto_align(Arena *arena, uint64_t align);
 unsigned int arena_pos(Arena *arena);
