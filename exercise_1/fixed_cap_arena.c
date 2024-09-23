@@ -2,15 +2,15 @@
 #include <stdint.h>
 
 typedef struct {
-    uint64_t *arena_start;
-    uint64_t *content_head;
+    uint64_t *arena_head;
+    uint64_t *content_tail;
     uint64_t size;
 } Arena;
 
 Arena *arena_alloc(uint64_t cap){
     Arena *arena = malloc(sizeof(Arena));
-    arena->arena_start = malloc(cap);
-    arena->content_head = arena->arena_start;
+    arena->arena_head = malloc(cap);
+    arena->content_tail = arena->arena_head;
     arena->size = cap;
     return arena;
 }
