@@ -15,7 +15,10 @@ Arena *arena_alloc(uint64_t cap){
     return arena;
 }
 
-void arena_release(Arena *arena);
+void arena_release(Arena *arena) {
+    free(arena->arena_head);
+    free(arena);
+}
 void arena_set_auto_align(Arena *arena, uint64_t align);
 unsigned int arena_pos(Arena *arena);
 void *arena_push_no_zero(Arena *arena, uint64_t size);
