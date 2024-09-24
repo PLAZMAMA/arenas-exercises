@@ -2,21 +2,21 @@
 #include <stdint.h>
 
 typedef struct {
-    uint64_t *arena_head;
+    uint64_t *head;
     uint64_t *content_tail;
     uint64_t size;
 } Arena;
 
 Arena *arena_alloc(uint64_t cap){
     Arena *arena = malloc(sizeof(Arena));
-    arena->arena_head = malloc(cap);
-    arena->content_tail = arena->arena_head;
+    arena->head = malloc(cap);
+    arena->content_tail = arena->head;
     arena->size = cap;
     return arena;
 }
 
 void arena_release(Arena *arena) {
-    free(arena->arena_head);
+    free(arena->head);
     free(arena);
 }
 
@@ -30,7 +30,9 @@ void arena_pop(Arena *arena, uint64_t size) {
     arena->content_tail -= size;
 }
 
-void arena_clear(Arena *arena);
+void arena_clear(Arena *arena) {
+    arena->content_tail = arena->head;
+}
 
 void arena_set_auto_align(Arena *arena, uint64_t align);
 unsigned int arena_pos(Arena *arena);
