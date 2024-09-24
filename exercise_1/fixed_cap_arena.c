@@ -21,7 +21,7 @@ void arena_release(Arena *arena) {
 }
 
 void *arena_push(Arena *arena, uint64_t size) {
-    if (arena->content_tail + size >= arena->size) {
+    if (*arena->content_tail + size >= arena->size) {
         exit(1);
     }
 
