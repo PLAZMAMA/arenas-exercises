@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+////////////////////////
+// Arena Implementation
+
 typedef struct {
     uint64_t *head;
     uint64_t *content_tail;
@@ -46,6 +49,9 @@ unsigned int arena_pos(Arena *arena);
 void *arena_push_no_zero(Arena *arena, uint64_t size);
 void *arena_push_aligner(Arena *arena, uint64_t alignment);
 void arena_pop_to(Arena *arena, uint64_t pos);
+
+////////////////////////////////
+// Arena Implementation Testing
 
 int main() {
 }
