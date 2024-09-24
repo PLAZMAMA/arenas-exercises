@@ -26,7 +26,10 @@ void *arena_push(Arena *arena, uint64_t size) {
     return result_head;
 }
 
-void arena_pop(Arena *arena, uint64_t size);
+void arena_pop(Arena *arena, uint64_t size) {
+    arena->content_tail -= size;
+}
+
 void arena_clear(Arena *arena);
 
 void arena_set_auto_align(Arena *arena, uint64_t align);
