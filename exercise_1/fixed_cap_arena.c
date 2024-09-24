@@ -31,6 +31,10 @@ void *arena_push(Arena *arena, uint64_t size) {
 }
 
 void arena_pop(Arena *arena, uint64_t size) {
+    if (arena->content_tail - size < 0) {
+        exit(1);
+    }
+
     arena->content_tail -= size;
 }
 
