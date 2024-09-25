@@ -64,22 +64,23 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 // Arena Implementation Testing
 
 #define KB 1000
-#define ARENA_OCCUPIED_BAR_SIZE 50
+#define ARENA_OCCUPATION_BAR_SIZE 50
 
 void print_arena(Arena *arena) {
-  int occupied_memory_size = arena->size - *arena->content_tail;
-  unsigned int occupied_bar_indx = 0;
-  char occupied_bar[ARENA_OCCUPIED_BAR_SIZE] = {0};
+  float percent_occupied_memory_size = (*arena->content_tail - *arena->head) / (float) arena->size;
+  uint8_t occupied_bar_indx = 0;
+  char arena_occupation_bar[ARENA_OCCUPATION_BAR_SIZE] = {0};
+  uint8_t occupied_bar_section =  (int) (ARENA_OCCUPATION_BAR_SIZE * percent_occupied_memory_size);
 
-  for (; occupied_bar_indx < (int) ARENA_OCCUPIED_BAR_SIZE /occupied_memory_size; occupied_bar_indx++) {
-    occupied_bar[occupied_bar_indx] = '#';
+  for (; occupied_bar_indx < occupied_bar_section; occupied_bar_indx++) {
+    arena_occupation_bar[occupied_bar_indx] = '#';
   }
 
-  for (; occupied_bar_indx < ARENA_OCCUPIED_BAR_SIZE; occupied_bar_indx++) {
-    occupied_bar[occupied_bar_indx] = ' ';
+  for (; occupied_bar_indx < ARENA_OCCUPATION_BAR_SIZE; occupied_bar_indx++) {
+    arena_occupation_bar[occupied_bar_indx] = ' ';
   }
 
-  printf("[%s]", occupied_bar);
+  printf("[%s]", arena_occupation_bar);
 }
 
 int main() {
