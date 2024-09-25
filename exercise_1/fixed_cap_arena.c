@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+//////////
+// Macros
+#define push_array(arena, type, count) (type *)arena_push(arena, sizeof(type) * count)
+
 ////////////////////////
 // Arena Implementation
 
