@@ -45,7 +45,7 @@ void arena_clear(Arena *arena) {
 
 // Don't know how to implement these or what they do at all.
 void arena_set_auto_align(Arena *arena, uint64_t align);
-unsigned int arena_pos(Arena *arena);
+uint64_t arena_pos(Arena *arena);
 void *arena_push_no_zero(Arena *arena, uint64_t size);
 void *arena_push_aligner(Arena *arena, uint64_t alignment);
 void arena_pop_to(Arena *arena, uint64_t pos);
