@@ -69,7 +69,7 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 void print_arena(Arena *arena) {
   float percent_occupied_memory_size = (arena->content_tail - arena->head) / (float) arena->size;
   uint8_t occupied_bar_indx = 0;
-  char arena_occupation_bar[ARENA_OCCUPATION_BAR_SIZE] = {0};
+  char arena_occupation_bar[ARENA_OCCUPATION_BAR_SIZE + 1] = {0};
   uint8_t occupied_bar_section =  (int) (ARENA_OCCUPATION_BAR_SIZE * percent_occupied_memory_size);
 
   for (; occupied_bar_indx < occupied_bar_section; occupied_bar_indx++) {
