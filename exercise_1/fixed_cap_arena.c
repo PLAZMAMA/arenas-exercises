@@ -63,6 +63,7 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 ////////////////////////////////
 // Arena Implementation Testing
 
+#define KB 1000
 #define ARENA_OCCUPIED_BAR_SIZE 50
 
 void print_arena(Arena *arena) {
@@ -82,4 +83,5 @@ void print_arena(Arena *arena) {
 }
 
 int main() {
+  Arena *arena = arena_alloc(2 * KB);
 }
