@@ -80,7 +80,7 @@ void print_arena(Arena *arena) {
     arena_occupation_bar[occupied_bar_indx] = ' ';
   }
 
-  printf("[%s]", arena_occupation_bar);
+  printf("[%s]\n", arena_occupation_bar);
 }
 
 int main() {
