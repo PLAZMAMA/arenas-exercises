@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -62,4 +63,23 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 ////////////////////////////////
 // Arena Implementation Testing
 
-int main() {}
+#define ARENA_OCCUPIED_BAR_SIZE 50
+
+void print_arena(Arena *arena) {
+  int occupied_memory_size = arena->size - *arena->content_tail;
+  unsigned int occupied_bar_indx = 0;
+  char occupied_bar[ARENA_OCCUPIED_BAR_SIZE] = {0};
+
+  for (; occupied_bar_indx < (int) ARENA_OCCUPIED_BAR_SIZE /occupied_memory_size; occupied_bar_indx++) {
+    occupied_bar[occupied_bar_indx] = '#';
+  }
+
+  for (; occupied_bar_indx < ARENA_OCCUPIED_BAR_SIZE; occupied_bar_indx++) {
+    occupied_bar[occupied_bar_indx] = ' ';
+  }
+
+  printf("[%s]", occupied_bar);
+}
+
+int main() {
+}
