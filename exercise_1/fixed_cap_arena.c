@@ -85,4 +85,6 @@ void print_arena(Arena *arena) {
 
 int main() {
   Arena *arena = arena_alloc(2 * KB);
+  arena_push(arena, 1000);
+  print_arena(arena);
 }
