@@ -66,6 +66,10 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 #define KB 1000
 #define ARENA_OCCUPATION_BAR_SIZE 50
 
+// TODO: improve granularity for print_arena to print each byte in the arena provided. (potential steps below)
+//  1. create arena to house printed arena str
+//  2. push to arena the printed arena str
+//  3. and thats it I think...
 void print_arena(Arena *arena) {
   float percent_occupied_memory_size = (arena->content_tail - arena->head) / (float) arena->size;
   uint8_t occupied_bar_indx = 0;
