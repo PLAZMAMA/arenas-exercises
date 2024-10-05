@@ -17,6 +17,7 @@ typedef struct {
   uint64_t size;
 } Arena;
 
+// Allocates/creates a new arena struct
 Arena *arena_alloc(uint64_t cap) {
   Arena *arena = malloc(sizeof(Arena));
   arena->head = malloc(cap);
@@ -25,11 +26,13 @@ Arena *arena_alloc(uint64_t cap) {
   return arena;
 }
 
+// Releases/frees given areana struct
 void arena_release(Arena *arena) {
   free(arena->head);
   free(arena);
 }
 
+// Appends a chunk of memory of the given size to the arena's tail.
 void *arena_push_no_zero(Arena *arena, uint64_t size) {
   if (*arena->content_tail + size >= arena->size) {
     exit(1);
@@ -40,18 +43,22 @@ void *arena_push_no_zero(Arena *arena, uint64_t size) {
   return result_head;
 }
 
+// Appends a chunk of memory of the given size to the arena's tail,
+// and zeros out the memory is appended chunk.
 void *arena_push(Arena *arena, uint64_t size) {
   void *result_head = arena_push_no_zero(arena, size);
   memset(result_head, 0, size);
   return result_head;
 }
 
+// Deletes a memory chunk of given size from the arena's tail.
 void arena_pop(Arena *arena, uint64_t size) {
   if (arena->content_tail - size > arena->head) {
     arena->content_tail -= size;
   }
 }
 
+// Clears the whole arena
 void arena_clear(Arena *arena) { arena->content_tail = arena->head; }
 
 // Don't know how to implement these or what they do at all.
