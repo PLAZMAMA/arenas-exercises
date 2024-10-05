@@ -71,28 +71,23 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 //  2. push to arena the printed arena str
 //  3. and thats it I think...
 void print_arena(Arena *arena) {
-  float percent_occupied_memory_size = (arena->content_tail - arena->head) / (float) arena->size;
-  uint8_t occupied_bar_indx = 0;
-  char arena_occupation_bar[ARENA_OCCUPATION_BAR_SIZE + 1] = {0};
-  uint8_t occupied_bar_section =  (int) (ARENA_OCCUPATION_BAR_SIZE * percent_occupied_memory_size);
+  uint64_t content_head_indx = arena->content_tail - arena->head;
 
-  while (occupied_bar_indx < occupied_bar_section) {
-    arena_occupation_bar[occupied_bar_indx] = '#';
-    occupied_bar_indx++;
+  printf("[");
+  for (uint64_t arena_indx = 0; arena_indx < arena->size; arena_indx++) {
+    if (arena_indx <= content_head_indx) {
+      printf("#");
+    } else {
+      printf(" ");
+    }
   }
-
-  while(occupied_bar_indx < ARENA_OCCUPATION_BAR_SIZE) {
-    arena_occupation_bar[occupied_bar_indx] = ' ';
-    occupied_bar_indx++;
-  }
-
-  printf("[%s]\n", arena_occupation_bar);
+  printf("]\n");
 }
 
 // TODO: Allocate 100 byes to the test arena and print it in a loop with a random number generated stop.
 // Do a bound check before starting the loop to declare if the program should crash(due to no more space in the arena) or not
 int main() {
   Arena *arena = arena_alloc(KB);
-  arena_push(arena, 1000);
+  arena_push(arena, 500);
   print_arena(arena);
 }
