@@ -92,7 +92,7 @@ void print_arena(Arena *arena) {
 // TODO: Allocate 100 byes to the test arena and print it in a loop with a random number generated stop.
 // Do a bound check before starting the loop to declare if the program should crash(due to no more space in the arena) or not
 int main() {
-  Arena *arena = arena_alloc(2 * KB);
+  Arena *arena = arena_alloc(KB);
   arena_push(arena, 1000);
   print_arena(arena);
 }
