@@ -76,12 +76,14 @@ void print_arena(Arena *arena) {
   char arena_occupation_bar[ARENA_OCCUPATION_BAR_SIZE + 1] = {0};
   uint8_t occupied_bar_section =  (int) (ARENA_OCCUPATION_BAR_SIZE * percent_occupied_memory_size);
 
-  for (; occupied_bar_indx < occupied_bar_section; occupied_bar_indx++) {
+  while (occupied_bar_indx < occupied_bar_section) {
     arena_occupation_bar[occupied_bar_indx] = '#';
+    occupied_bar_indx++;
   }
 
-  for (; occupied_bar_indx < ARENA_OCCUPATION_BAR_SIZE; occupied_bar_indx++) {
+  while(occupied_bar_indx < ARENA_OCCUPATION_BAR_SIZE) {
     arena_occupation_bar[occupied_bar_indx] = ' ';
+    occupied_bar_indx++;
   }
 
   printf("[%s]\n", arena_occupation_bar);
