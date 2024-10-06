@@ -40,7 +40,7 @@ void arena_release(Arena *arena) {
 
 // Appends a chunk of memory of the given size to the arena's tail.
 void *arena_push_no_zero(Arena *arena, uint64_t size) {
-  if (*arena->content_tail + size >= arena->size) {
+  if ((arena->content_tail - arena->head) >= arena->size) {
     exit(1);
   }
 
