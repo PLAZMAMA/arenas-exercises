@@ -1,7 +1,12 @@
+#ifdef _win32
+  #include <windows.h>
+#endif
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 ////////////////
 // Arena Macros
@@ -72,6 +77,20 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 
 #define KB 1000
 #define ARENA_OCCUPATION_BAR_SIZE 50
+#define MILISEC_TO_NANOSEC_MULT 1000000
+#define MILISEC_TO_SECS_DIV 1000
+
+void sleep_ms(uint8_t ms) {
+  #ifdef _win32
+    Sleep(ms);
+  # else
+    struct timespec ts;
+    ts.tv_sec = ms / MILISEC_TO_SECS_DIV;
+    ts.tv_nsec = ms * MILISEC_TO_NANOSEC_MULT;
+    nanosleep(&ts, NULL);
+  #endif
+
+}
 
 void print_arena(Arena *arena) {
   uint64_t content_head_indx = arena->content_tail - arena->head;
