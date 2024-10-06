@@ -59,7 +59,7 @@ void *arena_push(Arena *arena, uint64_t size) {
 
 // Deletes a memory chunk of given size from the arena's tail.
 void arena_pop(Arena *arena, uint64_t size) {
-  if (arena->content_tail - size > arena->head) {
+  if ((arena->content_tail - arena->head) >= size) {
     arena->content_tail -= size;
   }
 }
