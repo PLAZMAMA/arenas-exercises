@@ -1,13 +1,13 @@
 #ifdef _win32
-  #include <windows.h>
+#include <windows.h>
 #endif
 
-#include <stdio.h>
+#include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <stdbool.h>
 
 ////////////////
 // Arena Macros
@@ -84,15 +84,14 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 #define MILISEC_TO_SECS_DIV 1000
 
 void sleep_ms(uint8_t ms) {
-  #ifdef _win32
-    Sleep(ms);
-  # else
-    struct timespec ts;
-    ts.tv_sec = ms / MILISEC_TO_SECS_DIV;
-    ts.tv_nsec = ms * MILISEC_TO_NANOSEC_MULT;
-    nanosleep(&ts, NULL);
-  #endif
-
+#ifdef _win32
+  Sleep(ms);
+#else
+  struct timespec ts;
+  ts.tv_sec = ms / MILISEC_TO_SECS_DIV;
+  ts.tv_nsec = ms * MILISEC_TO_NANOSEC_MULT;
+  nanosleep(&ts, NULL);
+#endif
 }
 
 void print_arena(Arena *arena) {
@@ -106,23 +105,27 @@ void print_arena(Arena *arena) {
       printf(" ");
     }
   }
-  printf("]\n ammount_allocated:%d\n", (int) ammount_allocated);
+  printf("]\n ammount_allocated:%d\n", (int)ammount_allocated);
 }
 
-// TODO: Allocate 100 byes to the test arena and print it in a loop with a random number generated stop.
-// Do a bound check before starting the loop to declare if the program should crash(due to no more space in the arena) or not
+// TODO: Allocate 100 byes to the test arena and print it in a loop with a
+// random number generated stop. Do a bound check before starting the loop to
+// declare if the program should crash(due to no more space in the arena) or not
 int main() {
   Arena *arena = arena_alloc(ARENA_SIZE);
   srand(time(NULL));
-  uint8_t number_of_allocations = rand() % (int8_t) (2 * (ARENA_SIZE / ALLOCATION_BYTE_SIZE));
-  bool will_out_of_range = number_of_allocations * ALLOCATION_BYTE_SIZE > ARENA_SIZE;
+  uint8_t number_of_allocations =
+      rand() % (int8_t)(2 * (ARENA_SIZE / ALLOCATION_BYTE_SIZE));
+  bool will_out_of_range =
+      number_of_allocations * ALLOCATION_BYTE_SIZE > ARENA_SIZE;
 
   printf("Number of allocations: %d\n", number_of_allocations);
-  printf("Will the arena allocation fail due to out of range? %s\n", will_out_of_range ? "True": "False");
+  printf("Will the arena allocation fail due to out of range? %s\n",
+         will_out_of_range ? "True" : "False");
   for (uint8_t indx = 0; indx < number_of_allocations; indx++) {
     arena_push(arena, ALLOCATION_BYTE_SIZE);
     print_arena(arena);
-    sleep_ms((uint8_t) SLEEP_TIME_MS);
+    sleep_ms((uint8_t)SLEEP_TIME_MS);
   }
   printf("SUCCESS!!! Got throught all the allocations made!\n");
 }
