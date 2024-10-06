@@ -77,7 +77,9 @@ void arena_pop_to(Arena *arena, uint64_t pos);
 // Arena Implementation Testing
 
 #define KB 1000
-#define ARENA_OCCUPATION_BAR_SIZE 50
+#define ARENA_SIZE KB
+#define ALLOCATION_BYTE_SIZE 100
+#define SLEEP_TIME_MS 500
 #define MILISEC_TO_NANOSEC_MULT 1000000
 #define MILISEC_TO_SECS_DIV 1000
 
@@ -113,13 +115,12 @@ int main() {
   Arena *arena = arena_alloc(ARENA_SIZE);
   srand(time(NULL));
   uint8_t number_of_allocations = rand() % (int8_t) (2 * (ARENA_SIZE / ALLOCATION_BYTE_SIZE));
-  bool will_out_of_range = number_of_allocations * ALLOCATION_BYTE_SIZE >= ARENA_SIZE;
+  bool will_out_of_range = number_of_allocations * ALLOCATION_BYTE_SIZE > ARENA_SIZE;
 
   printf("Number of allocations: %d\n", number_of_allocations);
   printf("Will the arena allocation fail due to out of range? %s\n", will_out_of_range ? "True": "False");
   for (uint8_t indx = 0; indx < number_of_allocations; indx++) {
     arena_push(arena, ALLOCATION_BYTE_SIZE);
-    printf("HERERERE\r\r");
     print_arena(arena);
     sleep_ms((uint8_t) SLEEP_TIME_MS);
   }
